@@ -1,0 +1,142 @@
+﻿<Window x:Class="SoleDamProyecto.Ventanas.ServiciosWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Portal docente - Servicios" Height="780" Width="1100" MinHeight="680" MinWidth="900"
+        Background="#0B0A14" FontFamily="Segoe UI" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style x:Key="EtiquetaEstilo" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#6B6E85"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="CampoTextoEstilo" TargetType="TextBox">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#1F2030"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,0"/>
+        </Style>
+
+        <Style x:Key="BotonEstilo" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="borde" Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="borde" Property="Opacity" Value="0.88"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Border Width="900" CornerRadius="16" Background="#F7F8FC" Padding="32,26,32,28"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="32" ShadowDepth="0" Opacity="0.55"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <!-- Cabecera -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Servicios" FontSize="26" FontWeight="Bold" Foreground="#1F2030"/>
+                        <TextBlock Text="Registra un servicio y consulta los ya guardados" FontSize="13"
+                                   Foreground="#6B6E85"/>
+                    </StackPanel>
+                    <Button x:Name="TornarInicioBoto" Grid.Column="1" Style="{StaticResource BotonEstilo}"
+                            Background="#E6E8F2" Foreground="#1F2030" Content="Volver al inicio"
+                            Width="150" Height="40" Click="TornarInicioBoto_Click"/>
+                </Grid>
+
+                <Border Height="1" Background="#E1E3EE" Margin="0,16,0,20"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="28"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Columna izquierda: formulario -->
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Nombre del servicio" Style="{StaticResource EtiquetaEstilo}"/>
+                        <TextBox x:Name="NombreServicioText" Style="{StaticResource CampoTextoEstilo}"
+                                 MaxLength="60" Margin="0,0,0,16"/>
+
+                        <TextBlock Text="Tipo de servicio" Style="{StaticResource EtiquetaEstilo}"/>
+                        <ComboBox x:Name="TipoServicioCombo" Height="40" FontSize="14" Foreground="#1F2030"
+                                  VerticalContentAlignment="Center" Margin="0,0,0,16">
+                            <ComboBoxItem Content="Comedor"/>
+                            <ComboBoxItem Content="Transporte escolar"/>
+                            <ComboBoxItem Content="Actividades extraescolares"/>
+                            <ComboBoxItem Content="Mantenimiento"/>
+                            <ComboBoxItem Content="Otros"/>
+                        </ComboBox>
+
+                        <TextBlock Text="Fecha de inicio" Style="{StaticResource EtiquetaEstilo}"/>
+                        <DatePicker x:Name="FechaServicioFecha" Height="40" FontSize="14" Foreground="#1F2030"
+                                    VerticalContentAlignment="Center" Margin="0,0,0,16"/>
+
+                        <TextBlock Text="Prioridad" Style="{StaticResource EtiquetaEstilo}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                            <RadioButton x:Name="PrioridadBajaRadio" Content="Baja" GroupName="Prioridad"
+                                         Foreground="#1F2030" Margin="0,0,22,0"/>
+                            <RadioButton x:Name="PrioridadMediaRadio" Content="Media" GroupName="Prioridad"
+                                         Foreground="#1F2030" Margin="0,0,22,0" IsChecked="True"/>
+                            <RadioButton x:Name="PrioridadAltaRadio" Content="Alta" GroupName="Prioridad"
+                                         Foreground="#1F2030"/>
+                        </StackPanel>
+
+                        <CheckBox x:Name="UrgenteCheck" Content="Marcar como urgente" Foreground="#1F2030"
+                                  Margin="0,0,0,16"/>
+
+                        <TextBlock Text="Descripción" Style="{StaticResource EtiquetaEstilo}"/>
+                        <TextBox x:Name="DescripcionServicioText" Height="90" FontSize="14" Foreground="#1F2030"
+                                 MaxLength="250" TextWrapping="Wrap" AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto" Padding="8,6"/>
+                    </StackPanel>
+
+                    <!-- Columna derecha: servicios guardados -->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Servicios guardados" Style="{StaticResource EtiquetaEstilo}"/>
+                        <ListBox x:Name="ServiciosLista" Height="330" FontSize="14" Foreground="#1F2030"
+                                 SelectionChanged="ServiciosLista_SelectionChanged"/>
+                        <Button x:Name="EliminarServicioBoto" Style="{StaticResource BotonEstilo}"
+                                Background="#FCE4E4" Foreground="#C62828" Content="Eliminar seleccionado"
+                                Height="38" Margin="0,12,0,0" IsEnabled="False"
+                                Click="EliminarServicioBoto_Click"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock x:Name="EstadoServicioText" Foreground="#C62828" FontSize="13" TextWrapping="Wrap"
+                           MinHeight="22" Margin="0,16,0,8"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="LimpiarServicioBoto" Style="{StaticResource BotonEstilo}"
+                            Background="#E6E8F2" Foreground="#1F2030" Content="Limpiar"
+                            Width="110" Height="44" Click="LimpiarServicioBoto_Click"/>
+                    <Button x:Name="GuardarServicioBoto" Style="{StaticResource BotonEstilo}"
+                            Background="#6366F1" Content="Guardar servicio"
+                            Width="170" Height="44" Margin="10,0,0,0" Click="GuardarServicioBoto_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</Window>
